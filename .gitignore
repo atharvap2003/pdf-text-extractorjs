@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log*
+
+# Environment files
+.env
+.env.*.local
+
+# Build outputs
+build/
+dist/
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs
+logs/
+*.log
+
+# Coverage directory used by testing tools
+coverage/
+
+# Other
+*.tgz
+*.swp
+*.swo
+*.swn
+*.sublime-workspace
+*.sublime-project
+
+# Local environment files
+*.local
+*.env.local

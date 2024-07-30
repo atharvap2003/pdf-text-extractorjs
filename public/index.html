@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Text Extractor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      input[type="file"] {
+        margin: 20px 0;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 10px;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      button:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+
+      textarea {
+        width: 90%;
+        height: 150px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 20px;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>PDF Text Extractor</h1>
+      <input type="file" id="inpFile" multiple/>
+      <button type="button" id="btnUpload" disabled>Upload</button>
+      <button type="button" id="btnCopy" disabled>Copy Text</button>
+      <textarea id="resultText" placeholder="Your PDF text will appear here!"></textarea>
+    </div>
+
+    <script>
+        const btnUpload = document.getElementById("btnUpload");
+        const btnCopy = document.getElementById("btnCopy");
+        const inpFile = document.getElementById("inpFile");
+        const resultText = document.getElementById("resultText");
+      
+        inpFile.addEventListener("change", () => {
+          btnUpload.disabled = !inpFile.files.length;
+        });
+      
+        btnUpload.addEventListener("click", () => {
+          if (inpFile.files.length === 0) {
+            return;
+          }
+      
+          btnUpload.disabled = true;
+      
+          const formData = new FormData();
+          for (let i = 0; i < inpFile.files.length; i++) {
+            formData.append("pdfFile", inpFile.files[i]);
+          }
+      
+          fetch("/extract-text", {
+            method: "post",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((extractedText) => {
+              resultText.value = extractedText;
+              btnCopy.disabled = !extractedText.length;
+            })
+            .catch((error) => {
+              console.error("Error uploading file:", error);
+              resultText.value = "Error extracting text from the PDF.";
+              btnCopy.disabled = true;
+            })
+            .finally(() => {
+              btnUpload.disabled = false;
+            });
+        });
+      
+        btnCopy.addEventListener("click", () => {
+          if (!resultText.value.length) {
+            return;
+          }
+      
+          resultText.select();
+          document.execCommand("copy");
+          alert("Text copied to clipboard!");
+        });
+      
+        resultText.addEventListener("input", () => {
+          btnCopy.disabled = !resultText.value.length;
+        });
+      </script>
+      
+  </body>
+</html>
