@@ -9,6 +9,8 @@ To run this project locally, follow these steps:
    git clone https://github.com/atharvap2003/pdf-text-extractorjs.git
    cd pdf-text-extractorjs
 
+   ( if git is not available then download the zip file, unzip it and move on to next steps!!  )
+
 2. **Install Dependency:**
    ```bash
     (Navigate to directory and install dependencies using npm)
