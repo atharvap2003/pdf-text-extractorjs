@@ -6,7 +6,7 @@ To run this project locally, follow these steps:
    ```bash
    (open the folder on cmd where you wanna setup then type...)
    git init
-   git clone [https://github.com/atharvap2003/Ecommerce-mern-site.git](https://github.com/atharvap2003/pdf-text-extractorjs.git)
+   git clone https://github.com/atharvap2003/pdf-text-extractorjs.git
    cd pdf-text-extractorjs
 
 2. **Install Dependency:**
