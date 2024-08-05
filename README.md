@@ -11,7 +11,7 @@ To run this project locally, follow these steps:
 
 2. **Install Dependency:**
    ```bash
-    Navigate to directory and install dependencies
+    (Navigate to directory and install dependencies using npm)
     npm install
 
 3. **For Running the Project on Localhost**
