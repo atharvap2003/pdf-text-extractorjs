@@ -1,3 +1,6 @@
+HTML File:
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,16 +12,11 @@
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         height: 100vh;
         margin: 0;
-      }
-      .wrapper {
-        display: flex;
-        max-width: 1000px;
-        width: 100%;
-        margin: 24px;
       }
       .container {
         background-color: #fff;
@@ -26,9 +24,8 @@
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
-        width: 50%;
-        margin: 10px;
-        
+        max-width: 500px;
+        width: 100%;
       }
       h1 {
         color: #333;
@@ -54,9 +51,8 @@
         background-color: #0056b3;
       }
       .result-container {
+        margin-top: 20px;
         text-align: left;
-        overflow-y: auto;
-        max-height: 400px;
       }
       .result {
         margin-bottom: 20px;
@@ -75,16 +71,11 @@
     </style>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <h1>Upload PDF</h1>
-        <input type="file" id="inpFile" multiple />
-        <button type="button" id="btnUpload" disabled>Upload</button>
-      </div>
-      <div class="container">
-        <h1>Result</h1>
-        <div id="resultContainer" class="result-container"></div>
-      </div>
+    <div class="container">
+      <h1>PDF Text Extractor</h1>
+      <input type="file" id="inpFile" multiple />
+      <button type="button" id="btnUpload" disabled>Upload</button>
+      <div id="resultContainer" class="result-container"></div>
     </div>
     <script>
       const btnUpload = document.getElementById("btnUpload");
@@ -101,7 +92,7 @@
         }
 
         btnUpload.disabled = true;
-        resultContainer.innerHTML = "";
+        resultContainer.innerHTML = '';
 
         const formData = new FormData();
         for (let i = 0; i < inpFile.files.length; i++) {
@@ -114,21 +105,21 @@
         })
           .then((response) => response.json())
           .then((extractedTexts) => {
-            extractedTexts.forEach((file) => {
-              const fileResult = document.createElement("div");
-              fileResult.className = "result";
-              const filename = document.createElement("p");
-              filename.className = "filename";
+            extractedTexts.forEach(file => {
+              const fileResult = document.createElement('div');
+              fileResult.className = 'result';
+              const filename = document.createElement('p');
+              filename.className = 'filename';
               filename.textContent = file.filename;
-              const textarea = document.createElement("textarea");
+              const textarea = document.createElement('textarea');
               textarea.textContent = file.text;
               textarea.readOnly = true;
-              const copyButton = document.createElement("button");
-              copyButton.textContent = "Copy Text";
-              copyButton.addEventListener("click", () => {
+              const copyButton = document.createElement('button');
+              copyButton.textContent = 'Copy Text';
+              copyButton.addEventListener('click', () => {
                 textarea.select();
-                document.execCommand("copy");
-                alert("Text copied to clipboard!");
+                document.execCommand('copy');
+                alert('Text copied to clipboard!');
               });
               fileResult.appendChild(filename);
               fileResult.appendChild(textarea);
@@ -138,8 +129,7 @@
           })
           .catch((error) => {
             console.error("Error uploading files:", error);
-            resultContainer.innerHTML =
-              "<p>Error extracting text from the PDF files.</p>";
+            resultContainer.innerHTML = '<p>Error extracting text from the PDF files.</p>';
           })
           .finally(() => {
             btnUpload.disabled = false;
@@ -148,3 +138,6 @@
     </script>
   </body>
 </html>
+
+
+
