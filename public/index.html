@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PDF Text Extractor</title>
+    <title>PDF Text Summarizer</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -28,7 +28,6 @@
         text-align: center;
         width: 50%;
         margin: 10px;
-        
       }
       h1 {
         color: #333;
@@ -113,22 +112,22 @@
           body: formData,
         })
           .then((response) => response.json())
-          .then((extractedTexts) => {
-            extractedTexts.forEach((file) => {
+          .then((summaries) => {
+            summaries.forEach((file) => {
               const fileResult = document.createElement("div");
               fileResult.className = "result";
               const filename = document.createElement("p");
               filename.className = "filename";
               filename.textContent = file.filename;
               const textarea = document.createElement("textarea");
-              textarea.textContent = file.text;
+              textarea.textContent = file.summary; // Displaying the summary
               textarea.readOnly = true;
               const copyButton = document.createElement("button");
-              copyButton.textContent = "Copy Text";
+              copyButton.textContent = "Copy Summary";
               copyButton.addEventListener("click", () => {
                 textarea.select();
                 document.execCommand("copy");
-                alert("Text copied to clipboard!");
+                alert("Summary copied to clipboard!");
               });
               fileResult.appendChild(filename);
               fileResult.appendChild(textarea);
@@ -139,7 +138,7 @@
           .catch((error) => {
             console.error("Error uploading files:", error);
             resultContainer.innerHTML =
-              "<p>Error extracting text from the PDF files.</p>";
+              "<p>Error extracting and summarizing text from the PDF files.</p>";
           })
           .finally(() => {
             btnUpload.disabled = false;
